@@ -30,6 +30,26 @@ class MinHeap {
   get size() {
     return this.store.length;
   }
+
+  // print like a tree
+  print() {
+    const size = this.size;
+    const data = this.store.slice();
+    let bsVal = 1;
+    let index = 0;
+    let curLine = '';
+
+    while (data.length) {
+      for (let i = bsVal; i > 0; i--) {
+        if (data.length) {
+          curLine += data.shift() + ' ';
+        }
+      }
+      bsVal *= 2;
+      console.log(curLine);
+      curLine = '';
+    }
+  }
 }
 
 // let heap = new MinHeap();
@@ -41,7 +61,11 @@ class MinHeap {
 // heap.insert(4);
 // heap.insert(2);
 // heap.insert(1);
-// console.log(heap);
+// heap.insert(6);
+// heap.insert(8);
+// heap.insert(3);
+// heap.insert(0);
+// heap.print();
 
 
 
