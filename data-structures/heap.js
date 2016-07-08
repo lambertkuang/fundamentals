@@ -27,6 +27,53 @@ class MinHeap {
     }
   }
 
+  _shiftDown(index) {
+    if (index === undefined || index === null) {
+      throw new Error('Needs index');
+    }
+
+    const currentValue = this.store[index];
+    const ind1 = 2 * index + 1;
+    const ind2 = 2 * index + 2;
+    const child1 = this.store[ind1];
+    const child2 = this.store[ind2];
+
+    // case 1: both children have values. case2: only first child has a value. other: no need to do anything
+    if (child1 !== undefined && child1 !== null && child2 !== undefined && child2 !== null) {
+      if (child2 < child1) {
+        // compare and shift down with index 1
+        if (child2 < currentValue) {
+          this.store[index] = child2;
+          this.store[ind2] = currentValue;
+          this._shiftDown(ind2);
+        }
+      } else {
+        if (child1 < currentValue) {
+          this.store[index] = child1;
+          this.store[ind1] = currentValue;
+          this._shiftDown(ind1);
+        }
+      }
+    } else if (child1 !== undefined && child1 !== null) {
+      if (child1 < currentValue) {
+        this.store[index] = child1;
+        this.store[ind1] = currentValue;
+        this._shiftDown(ind1);
+      }
+    }
+  }
+
+  pop() {
+    // put element in last index at root index
+    let rootVal = this.store[0];
+    let lastVal = this.store.pop();
+    this.store[0] = lastVal;
+
+    this._shiftDown(0);
+
+    return rootVal;
+  }
+
   get size() {
     return this.store.length;
   }
@@ -65,8 +112,9 @@ class MinHeap {
 // heap.insert(8);
 // heap.insert(3);
 // heap.insert(0);
+// console.log('popped val', heap.pop());
 // heap.print();
 
-
+// compare with https://www.cs.usfca.edu/~galles/visualization/Heap.html
 
 
